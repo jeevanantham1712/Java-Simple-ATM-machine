@@ -1,0 +1,116 @@
+import java.util.*;
+
+class Account {
+
+    private String user_Name;
+    private int pin_Number;
+    private double balance;
+
+    // Save username
+    public String name(String user_Name) {
+        this.user_Name = user_Name;
+        return user_Name;
+    }
+
+    // Save PIN
+    public int pin(int pin_Number){
+        this.pin_Number = pin_Number;
+        return pin_Number;
+    }
+
+    // Validate entered PIN
+    public boolean validatepin(int enteredPin){
+        return pin_Number == enteredPin;
+    }
+
+    // Withdraw money
+    public void amount(double amount_Withdraw) {
+        if (amount_Withdraw > balance) {
+            System.out.println("Insufficient Balance!");
+        } else {
+            balance -= amount_Withdraw;
+            System.out.println("Withdrawal Successful! Amount Withdrawn: " + amount_Withdraw);
+        }
+    }
+
+    // Deposit money
+    public void deposit(double amount_Deposit){
+        if (amount_Deposit > 0) {
+            balance += amount_Deposit;
+            System.out.println("Deposited Successfully! Amount: " + amount_Deposit);
+        } else {
+            System.out.println("Invalid Amount!");
+        }
+    }
+
+    // Check balance
+    public void check_Balance() {
+        System.out.println("Your Current Balance: ₹" + balance);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        Account acc = new Account();
+
+        System.out.print("Enter your Name: ");
+        String user_Name = sc.nextLine();
+
+        // Set PIN and starting balance
+        System.out.print("Set your ATM PIN: ");
+        int userPin = sc.nextInt();
+        acc.pin(userPin);
+
+        acc.name(user_Name);
+
+        // Ask PIN to login
+        System.out.print("Enter PIN to Login: ");
+        int enteredPin = sc.nextInt();
+
+        if(acc.validatepin(enteredPin)){
+            System.out.println("Welcome " + user_Name + "!\n");
+
+            while (true) {
+                System.out.println("=== ATM MENU ===");
+                System.out.println("1. Withdraw Cash");
+                System.out.println("2. Deposit Cash");
+                System.out.println("3. Check Balance");
+                System.out.println("4. Exit");
+                System.out.print("Enter your choice: ");
+
+                int choice = sc.nextInt();
+
+                switch(choice) {
+                    case 1:
+                        System.out.print("Enter amount to withdraw: ");
+                        double w = sc.nextDouble();
+                        acc.amount(w);
+                        break;
+
+                    case 2:
+                        System.out.print("Enter amount to deposit: ");
+                        double d = sc.nextDouble();
+                        acc.deposit(d);
+                        break;
+
+                    case 3:
+                        acc.check_Balance();
+                        break;
+
+                    case 4:
+                        System.out.println("Thank you for using ATM!");
+                        return;
+
+                    default:
+                        System.out.println("Invalid choice! Try again.");
+                }
+            }
+        } 
+        else {
+            System.out.println("Wrong PIN! Access Denied.");
+        }
+    }
+}
