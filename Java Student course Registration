@@ -1,0 +1,105 @@
+import java.util.*;
+
+class Student {
+    private String studentName;
+    private int studentID;
+
+    public Student(String studentName, int studentID) {
+        this.studentName = studentName;
+        this.studentID = studentID;
+    }
+
+   
+    public boolean validateID(int enteredID) {
+        return this.studentID == enteredID;
+    }
+
+     public String getName() {
+        return studentName;
+    }
+    
+    public void courseOffering(String selectedCourse) {
+        System.out.println("You Have Selected "+selectedCourse+" Course");
+        
+    }
+    
+    public void showCourse(){
+        List<String> Course = new ArrayList<>();
+            Course.add("Java");
+            Course.add("Python");
+            Course.add("SQL");
+            Course.add("Full Stack");
+            Course.add("Automation");
+            for(String show : Course){
+                System.out.println(show);
+            }
+    }
+    public void courseFee(String course_amt){
+       Map<String,Integer> map = new HashMap<>();
+       map.put("Java",50000);
+       map.put("Python",45000);
+       map.put("SQL",30000);
+       map.put("Full Stack",60000);
+       map.put("Automation",25000);
+      if (map.containsKey(course_amt)) {
+            System.out.println("The fee for " + course_amt + " is: ₹" + map.get(course_amt));
+        } else {
+            System.out.println("Course not found!");
+        }
+    }
+    public void welcome(){
+        System.out.println("Thanks for choosing ABC institue.Have a wonderfull Career Path.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter Student Name: ");
+        String name = sc.nextLine();
+        System.out.print("Create your Student ID : ");
+        int id = sc.nextInt();
+
+        Student student = new Student(name, id);
+
+        System.out.print("--- Portal Login ---Enter Student ID: ");
+        int loginID = sc.nextInt();
+
+        if (student.validateID(loginID)) {
+            System.out.println("Welcome, " + student.getName() + "!");
+
+            while (true) {
+                System.out.println("\n=== COURSE REGISTRATION MENU ===");
+                System.out.println("1.Course offered : ");
+                System.out.println("2.Select your Course : ");
+                System.out.println("3.Select your Course for Fee Structure");
+                System.out.println("4.Exit");
+                System.out.print("Enter choice: ");
+
+                int choice = sc.nextInt();
+                sc.nextLine(); 
+                switch (choice) {
+                    case 1:
+                        student.showCourse();
+                        break;
+                    case 2:
+                        String selectedCourse = sc.nextLine();
+                        student.courseOffering(selectedCourse);
+                        break;
+                    case 3:
+                        String course_amt = sc.nextLine();
+                        student.courseFee(course_amt);
+                        break;
+                    case 4:
+                        student.welcome();
+                        break;
+                        
+                }
+        }
+    }
+    else{
+        System.out.println("Unauthorized ID. Access Denied.");
+    }
+  }
+}
